@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendered Realities | Music Lab</title>
+    <style>
+        @font-face {
+            font-family: mySpace;
+            src: url(../fonts/SpaceGrotesk-VariableFont_wght.ttf);
+        }
+        @font-face {
+            font-family: myFunnel;
+            src: url(../fonts/FunnelSans-VariableFont_wght.ttf);
+        }
+        @font-face {
+            font-family: myFunnelDisplay;
+            src: url(../fonts/FunnelDisplay-SemiBold.ttf);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: rgba(7, 18, 21);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family: myFunnel;
+            position: relative;
+        }
+
+        header {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            padding: 10px 50px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background: transparent;
+        }
+
+        .header-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 40px;
+            grid-column: 3;
+        }
+
+        header nav a {
+            text-decoration: none;
+            font-family: mySpace;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            transition: opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header nav svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke-width: 1.5;
+            flex-shrink: 0;
+        }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .nav {
+            transition: opacity 0.2s, transform 1s, text-shadow 0.2s;
+        }
+
+        .nav:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            text-shadow: 0 0 16px #3f3254;
+        }
+
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 2.5fr 1fr;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .cell-B { grid-column: 1 / 4; grid-row: 1; }
+        .cell-A { grid-column: 1;     grid-row: 2; }
+        .cell-D { grid-column: 2;     grid-row: 2; }
+        .cell-C { grid-column: 3;     grid-row: 2; }
+
+        .grid-cell {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cell-B video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            color: #98a7d1;
+            background: #151e38;
+            transition: background 0.3s;
+        }
+
+        .media-placeholder:hover {
+            background: #1c2848;
+        }
+
+        .media-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cell-A .media-placeholder img {
+            width: auto;
+            height: 60%;
+            object-fit: contain;
+        }
+
+        .placeholder-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .text-card {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 36px 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .text-card-body {
+            overflow-y: auto;
+            flex: 1;
+            width: 100%;
+            min-height: 0;
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+         
+            scrollbar-width: thin;
+            scrollbar-color: #4d4d4d transparent;
+        }
+
+
+   
+
+        .text-card .eyebrow {
+            font-family: mySpace, sans-serif;
+            font-size: 0.5rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #6FD0FF;
+            margin-bottom: 10px;
+        }
+
+        .text-card .quote {
+            font-family: myFunnel;
+            font-size: 0.7rem;
+            line-height: 1.3;
+            text-align: left;
+            letter-spacing: 0.12em;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .text-card .divider {
+            width: 32px;
+            height: 10px;
+     
+          
+        }
+
+        .text-card .project-title {
+            font-family: mySpace, sans-serif;
+            font-size: 0.5rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+       
+        @media (max-width: 1024px) {
+            .editorial-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 2.5fr 1fr;
+            }
+            .cell-B { grid-column: 1 / 4; grid-row: 1; }
+            .cell-A { grid-column: 1;     grid-row: 2; }
+            .cell-D { grid-column: 2;     grid-row: 2; }
+            .cell-C { grid-column: 3;     grid-row: 2; }
+        }
+
+  
+        @media (max-width: 600px) {
+            body {
+                height: auto;
+                overflow: auto;
+            }
+
+            header {
+                padding: 10px 16px;
+            }
+
+            header nav {
+                gap: 16px;
+            }
+
+            header nav a {
+                font-size: 0.9rem;
+            }
+
+            .editorial-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto;
+                height: auto;
+            }
+
+            .cell-B { grid-column: 1 / 3; grid-row: 1; min-height: 50vw; }
+            .cell-A { grid-column: 1;     grid-row: 2; aspect-ratio: 1; height: auto; }
+            .cell-C { grid-column: 2;     grid-row: 2; aspect-ratio: 1; height: auto; }
+            .cell-D { grid-column: 1 / 3; grid-row: 3; min-height: 180px; }
+
+            .text-card {
+                padding: 24px 20px;
+            }
+
+            .text-card .quote {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+    
+        <nav>
+            <a href="../our-projects/our-projects.html" class="nav">
+                <img src="../images/RR-X.svg" class="nav-icon" alt="Our Projects Icon">
+            </a>
+        </nav>
+    </header>
+
+    <div class="editorial-grid">
+
+        <div class="grid-cell cell-B">
+            <video controls autoplay>
+                <source src="../music-lab-assets/Music-Lab_720p.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="grid-cell cell-A">
+            <div class="media-placeholder">
+                <img src="../music-lab-assets/Music-Lab.png" alt="Music Lab Icon">
+            </div>
+        </div>
+
+        <div class="grid-cell cell-D">
+            <div class="text-card">
+                <p class="eyebrow">Project Statement</p>
+                <div class="text-card-body">
+                    <p class="quote">
+                        This project is inspired by the cultural impact of music on urban populations in New York and Stellar Human’s recurring Vinyl Night, which transforms listening into a shared social experience. Inspired by contemporary Digital Audio Workstations, the project creates an open platform where anyone can contribute to a collective music piece, turning music production into a public, participatory experience that remains visually compelling for those who encounter it casually. Individuals can listen, catch a groove, and add or refine small musical elements without disrupting the overall composition. Guided by the rhythmic and tonal aesthetics of early hip-hop, the project establishes a shared sonic framework that supports individual expression while reinforcing a living subcultural identity. </p>
+                </div>
+                <div class="divider"></div>
+                <p class="project-title">Music Lab</p>
+            </div>
+        </div>
+
+        <div class="grid-cell cell-C">
+            <video controls muted autoplay>
+                <source src="../music-lab-assets/Music-Lab-Demo.mov" type="video/mp4">
+            </video>
+        </div>
+
+    </div>
+
+
+</body>
+</html>
